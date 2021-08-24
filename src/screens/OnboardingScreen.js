@@ -5,7 +5,7 @@ import { Icon } from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function OnboardingScreen() {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor:'blue'}}>
        <Text>onboardıng</Text>
        <Icon name="rocket" size={30} color="#900" />
     </SafeAreaView>
