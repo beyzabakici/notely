@@ -4,6 +4,7 @@ import CreateButton from '../components/CreateButton';
 import SearchArea from '../components/SearchArea';
 
 export default function HomeScreen({ navigation }) {
+  
   return (
     <SafeAreaView style={style.area}>
       <View style={style.header}>
@@ -22,7 +23,7 @@ const style = StyleSheet.create({
   area: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#fff'
+    backgroundColor: '#f1f1f1'
   },
   label: {
     fontSize: 26,
@@ -31,7 +32,7 @@ const style = StyleSheet.create({
     fontStyle: 'normal'
   },
   photo: {
-    backgroundColor: 'green',
+    backgroundColor: '#66DC8A',
     width: 25,
     height: 25,
     borderRadius: 5

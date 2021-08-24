@@ -1,10 +1,13 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, Text } from 'react-native';
 
 
 export default function OnboardingScreen() {
   return (
     <SafeAreaView>
+      <Text>
+        onboardıng
+      </Text>
     </SafeAreaView>
   );
 }
