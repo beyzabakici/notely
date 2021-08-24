@@ -10,12 +10,14 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@babel/preset-env": "^7.15.0",
     "@react-native-async-storage/async-storage": "^1.15.7",
     "@react-native-community/cli": "^5.0.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/stack": "^6.0.7",
     "axios": "^0.21.1",
+    "babel-loader": "^8.2.2",
     "jetifier": "^2.0.0",
     "react": "17.0.2",
     "react-native": "0.65.1",
@@ -24,10 +26,11 @@
     "react-native-safe-area-context": "^3.3.0",
     "react-native-screens": "^3.6.0",
     "react-native-vector-icons": "^8.1.0",
-    "simple-swizzle": "^0.2.2"
+    "simple-swizzle": "^0.2.2",
+    "webpack": "^5.51.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9",
+    "@babel/core": "^7.15.0",
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
     "babel-jest": "^26.6.3",
