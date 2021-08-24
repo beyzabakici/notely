@@ -13,9 +13,9 @@ export default function Router() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Home Screen" component={HomeScreen} />
-        <Stack.Screen name="Onboarding Screen" component={OnboardingScreen} />
-        <Stack.Screen name="Detail Screen" component={DetailScreen} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+        <Stack.Screen name="DetailScreen" component={DetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

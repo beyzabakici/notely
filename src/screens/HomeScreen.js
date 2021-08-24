@@ -3,7 +3,7 @@ import { SafeAreaView, Text, View, StyleSheet } from 'react-native';
 import CreateButton from '../components/CreateButton';
 import SearchArea from '../components/SearchArea';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   return (
     <SafeAreaView style={style.area}>
       <View style={style.header}>
@@ -13,7 +13,7 @@ export default function HomeScreen() {
         </View>
       </View>
       <SearchArea />
-      <CreateButton />
+      <CreateButton onPressButton={() => navigation.navigate('DetailScreen')} />
     </SafeAreaView>
   );
 }
