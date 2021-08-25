@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "json-server": "json-server --watch db.json"
   },
   "dependencies": {
     "@babel/preset-env": "^7.15.0",
@@ -19,6 +20,7 @@
     "axios": "^0.21.1",
     "babel-loader": "^8.2.2",
     "jetifier": "^2.0.0",
+    "json-server": "^0.16.3",
     "react": "17.0.2",
     "react-native": "0.65.1",
     "react-native-gesture-handler": "^1.10.3",
