@@ -17,15 +17,6 @@ export default function DetailScreen({ navigation, postId }) {
     change_date: ''    
   });
 
-  useEffect(() => {
-    getPost();
-  }, []);
-
-   const getPost = async () => {
-    const res = await api.get('/posts');
-    console.log(res);
-  }
-
   const handleBack = () => {
     navigation.goBack();
   }

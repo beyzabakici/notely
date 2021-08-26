@@ -6,7 +6,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import OnboardingScreen from './screens/OnboardingScreen';
 import DetailScreen from './screens/DetailScreen';
 import HomeScreen from './screens/HomeScreen';
-import wait from 'waait';
 
 const Stack = createStackNavigator();
 
@@ -20,8 +19,8 @@ export default function Router() {
   const checkIsUsed = async () => {
     try {
       const res = await AsyncStorage.getItem('@IS_USED');
-      console.log(res);
-      if(res === null || res === false){
+      console.log('router res > ',res);
+      if(!res){
         setInitialPage('OnboardingScreen');
       }
     } catch (error) {
