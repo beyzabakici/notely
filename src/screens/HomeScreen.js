@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, Text, View, StyleSheet } from 'react-native';
-import CreateButton from '../components/CreateButton';
+import CustomButton from '../components/CustomButton';
 import SearchArea from '../components/SearchArea';
 
 export default function HomeScreen({ navigation }) {
@@ -14,7 +14,7 @@ export default function HomeScreen({ navigation }) {
         </View>
       </View>
       <SearchArea />
-      <CreateButton onPressButton={() => navigation.navigate('DetailScreen')} />
+      <CustomButton icon='plus' iconPosition='front' text='Create' onPressButton={() => navigation.navigate('DetailScreen')} />
     </SafeAreaView>
   );
 }

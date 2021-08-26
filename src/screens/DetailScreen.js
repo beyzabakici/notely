@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import { SafeAreaView, StyleSheet, TouchableOpacity, View, Text, TextInput } from 'react-native';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MetarialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import api from '../api';
+import api from '../api/api';
 import ToolsArea from '../components/ToolsArea';
 
 export default function DetailScreen({ navigation, postId }) {
@@ -18,21 +18,23 @@ export default function DetailScreen({ navigation, postId }) {
   });
 
   useEffect(() => {
-    axios.get('http://localhost:3000/posts/0')
-    .then((data) => {
-      console.log(data);
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
+    getPost();
   }, []);
 
-  const handleSetNote = () => {
-
+   const getPost = async () => {
+    const res = await api.get('/posts');
+    console.log(res);
   }
 
   const handleBack = () => {
     navigation.goBack();
+  }
+
+  const submitNote = () =>{
+    // api.post('posts',{
+    //   "change_date": currentDate,
+    //   "title":title,
+    // })
   }
 
   return (
@@ -42,7 +44,7 @@ export default function DetailScreen({ navigation, postId }) {
         <TouchableOpacity onPress={() => handleBack()}>
           <MetarialIcon name='keyboard-backspace' size={27} color='#2d2d2d' />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => submitNote()}>
           <AntIcon name='check' size={27} color='#6273ED' />
         </TouchableOpacity>
       </View>

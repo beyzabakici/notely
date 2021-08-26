@@ -8,7 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "json-server": "json-server --watch db.json"
+    "json-server": "json-server --watch db.json --port 8000"
   },
   "dependencies": {
     "@babel/preset-env": "^7.15.0",
@@ -29,6 +29,7 @@
     "react-native-screens": "^3.6.0",
     "react-native-vector-icons": "^8.1.0",
     "simple-swizzle": "^0.2.2",
+    "waait": "^1.0.5",
     "webpack": "^5.51.1"
   },
   "devDependencies": {

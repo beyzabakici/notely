@@ -2,11 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import  Icon  from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function CreateButton({onPressButton}) {
+export default function CustomButton({onPressButton, icon, text, iconPosition}) {
   return(
     <TouchableOpacity style={style.area} onPress={() => onPressButton()}>
-      <Icon name='plus' size={23} />
-      <Text style={style.text}>Create</Text>
+      {iconPosition === 'front' ? <Icon name={icon} size={23} color='#262626'/> : null}
+      <Text style={style.text}>{text}</Text>
+      {iconPosition === 'back' ? <Icon name={icon} size={23} color='#262626'/> : null}
     </TouchableOpacity>
   );
 }
@@ -19,15 +20,16 @@ const style = StyleSheet.create({
     right: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 129,
-    height: 52,
     borderRadius: 30,
     backgroundColor: '#6273ED',
+    paddingHorizontal: 20,
+    paddingVertical: 15
   },
   text: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 16,
     marginLeft: 5,
+    marginRight: 5,
   }
 });
