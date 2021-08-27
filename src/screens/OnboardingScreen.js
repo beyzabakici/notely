@@ -18,7 +18,11 @@ export default function OnboardingScreen({ navigation }) {
         <Text style={style.label}>Notely</Text>
         <Text style={style.content}>Capture what’s on your mind & get a reminder later at the right place or time. You can also add voice memo & other features</Text>
       </View>
-      <CustomButton icon='arrow-right' iconPosition='back' text="Let's Start" onPressButton={() => { console.log('onboarding navigate'), navigation.navigate('HomeScreen') }} />
+      <CustomButton 
+        icon='arrow-right' 
+        iconPosition='back' text="Let's Start" 
+        onPressButton={() => {navigation.navigate('HomeScreen') }} 
+      />
     </SafeAreaView>
   );
 }

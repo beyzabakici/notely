@@ -18,7 +18,7 @@ export default function HomeScreen({ navigation }) {
       const res = await api.get('/posts');
       setPost(res.data);
     } catch (error) {
-      console.log(error)
+      console.log('error: ',error)
     }
   }
   const handleNoteCard = ({ item }) => {
