@@ -57,7 +57,8 @@ export default function DetailScreen({navigation, route}) {
           <TextInput 
             style={style.title} 
             onChangeText={setTitle}
-            value={title} />
+            value={title} 
+            multiline={true}/>
           <Text style={style.date}> {date} </Text>
           <TextInput 
             style={style.content} 

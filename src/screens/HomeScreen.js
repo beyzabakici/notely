@@ -10,14 +10,16 @@ export default function HomeScreen({ navigation }) {
   const [posts, setPost] = useState([]);
 
   useEffect(() => {
-    getPost();
+    const focus = navigation.addListener('focus', () => {
+      getPost();
+    })
   }, [posts])
 
   const getPost = async () => {
     try {
       const res = await api.get('/posts');
       setPost(res.data);
-    } catch (error) {
+    } catch (error) {   
       console.log('error: ',error)
     }
   }
