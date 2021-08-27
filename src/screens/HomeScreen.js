@@ -11,7 +11,7 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     getPost();
-  }, [])
+  }, [posts])
 
   const getPost = async () => {
     try {
@@ -22,9 +22,8 @@ export default function HomeScreen({ navigation }) {
     }
   }
   const handleNoteCard = ({ item }) => {
-    const note = item;
     return(
-      <TouchableOpacity onPress={() => navigation.navigate('DetailScreen',note)}>
+      <TouchableOpacity onPress={() => navigation.navigate('DetailScreen',item)}>
       <NoteCard item={item} />
     </TouchableOpacity>
     )
@@ -45,7 +44,7 @@ export default function HomeScreen({ navigation }) {
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
         />
-      <CustomButton icon='plus' iconPosition='front' text='Create' onPressButton={() => navigation.navigate('DetailScreen')} />
+      <CustomButton icon='plus' iconPosition='front' text='Create' onPressButton={() => navigation.navigate('DetailScreen','')} />
     </SafeAreaView>
   );
 }

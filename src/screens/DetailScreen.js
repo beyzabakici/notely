@@ -6,29 +6,40 @@ import MetarialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import api from '../api/api';
 import ToolsArea from '../components/ToolsArea';
 
-export default function DetailScreen({params}) {
-  const { change_date, content, title } = params;
-
-  console.log('Detail>>>',title)
+export default function DetailScreen({navigation, route}) {
+  const params = route.params;
     
   const currentDate = Date().toString();
-  const [text, onChangeText] = React.useState('New Note');
-  const [ note, setNote ] = useState({
-    postId: null,
-    postTitle: '',
-    postContent: '',
-    change_date: ''    
-  });
+  const [ title, setTitle ] = useState(params ? params.title : 'New Note' );
+  const [ note, setNote ] = useState(params ? params.content : '');
+  const [ date, setDate] = useState(params ? params.change_date : currentDate);
+  const [ id, setId ] = useState(params ? params.id : Date.now())
+
+  useEffect(() => {
+  },[])
+
 
   const handleBack = () => {
-    params.navigation.goBack();
+    navigation.goBack();
   }
 
   const submitNote = () =>{
-    // api.post('posts',{
-    //   "change_date": currentDate,
-    //   "title":title,
-    // })
+    if(!params){
+      api.post('posts',{
+        "id": id,
+        "title":title,
+        "content":note,
+        "change_date": date
+      })
+    } else {
+      api.put(`/posts/${id}`,{
+        "id": id,
+        "title":title,
+        "content":note,
+        "change_date": date
+      })
+    }
+    navigation.navigate('HomeScreen')
   }
 
   return (
@@ -45,10 +56,14 @@ export default function DetailScreen({params}) {
         <View style={style.noteArea}>
           <TextInput 
             style={style.title} 
-            onChangeText={onChangeText}
-            value={note.postTitle !== '' ? note.postTitle : text }/>
-          <Text style={style.date}>{note.change_date !== '' ? note.change_date :currentDate}</Text>
-          <TextInput value={note.postContent !== '' ? note.postContent : ''} />
+            onChangeText={setTitle}
+            value={title} />
+          <Text style={style.date}> {date} </Text>
+          <TextInput 
+            style={style.content} 
+            value={note}
+            onChangeText={setNote} 
+            multiline={true}/>
         </View>
       </View>
       <ToolsArea />
@@ -79,5 +94,7 @@ const style = StyleSheet.create({
     fontWeight: 'bold',
     fontStyle: 'normal',
     paddingStart: 0,
+  },
+  content: {
   }
 });

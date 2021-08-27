@@ -18,8 +18,8 @@ export default function NoteCard({ item }) {
 
 const style = StyleSheet.create({
   postArea: {
-    padding: 10,
-    marginVertical: 10,
+    padding: 20,
+    marginVertical: 15,
     backgroundColor: '#fff',
     borderRadius: 7,
 
