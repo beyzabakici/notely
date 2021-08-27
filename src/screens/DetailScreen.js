@@ -6,10 +6,13 @@ import MetarialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import api from '../api/api';
 import ToolsArea from '../components/ToolsArea';
 
-export default function DetailScreen({ navigation, postId }) {
+export default function DetailScreen({params}) {
+  const { change_date, content, title } = params;
+
+  console.log('Detail>>>',title)
     
   const currentDate = Date().toString();
-  const [title, onChangeTitle] = React.useState('New Note');
+  const [text, onChangeText] = React.useState('New Note');
   const [ note, setNote ] = useState({
     postId: null,
     postTitle: '',
@@ -18,7 +21,7 @@ export default function DetailScreen({ navigation, postId }) {
   });
 
   const handleBack = () => {
-    navigation.goBack();
+    params.navigation.goBack();
   }
 
   const submitNote = () =>{
@@ -42,8 +45,8 @@ export default function DetailScreen({ navigation, postId }) {
         <View style={style.noteArea}>
           <TextInput 
             style={style.title} 
-            onChangeText={onChangeTitle}
-            value={note.postTitle !== '' ? note.postTitle : title}/>
+            onChangeText={onChangeText}
+            value={note.postTitle !== '' ? note.postTitle : text }/>
           <Text style={style.date}>{note.change_date !== '' ? note.change_date :currentDate}</Text>
           <TextInput value={note.postContent !== '' ? note.postContent : ''} />
         </View>

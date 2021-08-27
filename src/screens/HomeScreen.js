@@ -15,16 +15,19 @@ export default function HomeScreen({ navigation }) {
 
   const getPost = async () => {
     try {
-      const res = await axios.get('http://10.0.2.2:3000/posts');
-      setPost(res.data); 
+      const res = await api.get('/posts');
+      setPost(res.data);
     } catch (error) {
       console.log(error)
     }
-  } 
-  const handlePostCard = ({item}) => {
-   <TouchableOpacity>
+  }
+  const handleNoteCard = ({ item }) => {
+    const note = item;
+    return(
+      <TouchableOpacity onPress={() => navigation.navigate('DetailScreen',note)}>
       <NoteCard item={item} />
     </TouchableOpacity>
+    )
   }
 
   return (
@@ -34,13 +37,14 @@ export default function HomeScreen({ navigation }) {
           <Text style={style.label}>My Notes</Text>
           <View style={style.photo}></View>
         </View>
-        <FlatList 
-         data={posts}
-         renderItem={handlePostCard}
-         keyExtractor={item => item.id}
-        />
-      </View>
       <SearchArea />
+      </View>
+        <FlatList
+          data={posts}
+          renderItem={handleNoteCard}
+          keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
+        />
       <CustomButton icon='plus' iconPosition='front' text='Create' onPressButton={() => navigation.navigate('DetailScreen')} />
     </SafeAreaView>
   );
