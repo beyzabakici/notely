@@ -4,7 +4,7 @@
  *
  * @format
  */
-
+// black list
 module.exports = {
   transformer: {
     getTransformOptions: async () => ({

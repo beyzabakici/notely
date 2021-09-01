@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions, Text } from 'react-native';
+import {View, StyleSheet, Dimensions, Text} from 'react-native';
 
-export default function NoteCard({ item }) {
-  const { change_date, content, title } = item;
+export default function NoteCard({item}) {
+  const {change_date, content, title} = item;
   return (
     <View style={style.postArea}>
       <View style={style.labelArea}>
@@ -10,7 +10,9 @@ export default function NoteCard({ item }) {
         <Text style={style.date}>{change_date}</Text>
       </View>
       <View style={style.contentArea}>
-        <Text style={style.content} numberOfLines={4}>{content}...</Text>
+        <Text style={style.content} numberOfLines={4} ellipsizeMode={'tail'}>
+          {content}
+        </Text>{' '}
       </View>
     </View>
   );
@@ -22,7 +24,6 @@ const style = StyleSheet.create({
     marginVertical: 15,
     backgroundColor: '#fff',
     borderRadius: 7,
-
   },
   labelArea: {
     borderBottomWidth: 1,
@@ -32,14 +33,14 @@ const style = StyleSheet.create({
     fontFamily: 'roboto',
     fontWeight: 'bold',
     fontSize: 16,
-    fontStyle: 'normal'
+    fontStyle: 'normal',
   },
   date: {
     marginBottom: 5,
     fontFamily: 'roboto',
     fontWeight: '400',
     fontSize: 12,
-    fontStyle: 'normal'
+    fontStyle: 'normal',
   },
   contentArea: {
     marginTop: 5,
@@ -48,6 +49,6 @@ const style = StyleSheet.create({
     fontFamily: 'roboto',
     fontWeight: '400',
     fontSize: 15,
-    fontStyle: 'normal'
+    fontStyle: 'normal',
   },
-})
+});

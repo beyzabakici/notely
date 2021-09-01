@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, TouchableOpacity, View, Dimensions } from 'react-native';
-import AntIcon from 'react-native-vector-icons/AntDesign';
+import AntIcon from 'react-native-vector-icons/AntDesign'; //Icon tek bi component olup oradan props ile seçiilebilirdi ?
 import MetarialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function ToolsArea() {

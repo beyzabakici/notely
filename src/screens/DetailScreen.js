@@ -12,18 +12,18 @@ export default function DetailScreen({navigation, route}) {
   const currentDate = Date().toString();
   const [ title, setTitle ] = useState(params ? params.title : 'New Note' );
   const [ note, setNote ] = useState(params ? params.content : '');
-  const [ date, setDate] = useState(params ? params.change_date : currentDate);
-  const [ id, setId ] = useState(params ? params.id : Date.now())
+  const [ date, setDate] = useState(params ? params.change_date : currentDate); //burada
+  const [ id, setId ] = useState(params ? params.id : Date.now())               // ve burada state e gerek var mıydı ?
 
   useEffect(() => {
-  },[])
+  },[])     //boş bir useEffect ??
 
 
   const handleBack = () => {
     navigation.goBack();
   }
 
-  const submitNote = () =>{
+  const submitNote = () =>{  // p geliştirilebilir mi ?
     if(!params){
       api.post('posts',{
         "id": id,
