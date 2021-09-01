@@ -4,7 +4,6 @@
  *
  * @format
  */
-// black list
 module.exports = {
   transformer: {
     getTransformOptions: async () => ({
@@ -13,5 +12,8 @@ module.exports = {
         inlineRequires: true,
       },
     }),
+  },
+  resolver: {
+    blacklistRE: require('./db.json'),
   },
 };

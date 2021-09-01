@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function LoadingScreen({navigation}) {
   useEffect(() => {
     checkIsUsed;
-  }, []);
+  });
 
   const checkIsUsed = async () => {
     try {
