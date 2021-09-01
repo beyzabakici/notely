@@ -17,11 +17,11 @@ export default function HomeScreen({navigation}) {
   const [posts, setPost] = useState([]);
 
   useEffect(() => {
-    const focus = navigation.addListener('focus', () => {
+    const unsubscribeFocus = navigation.addListener('focus', () => {
       getPost();
     });
-    // unsbruscribe
-  }, [ posts]);
+    return unsubscribeFocus;
+  }, [navigation, posts]);
 
   const getPost = async () => {
     try {
