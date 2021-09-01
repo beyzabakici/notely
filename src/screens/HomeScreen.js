@@ -6,6 +6,8 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  Image,
+  Alert,
 } from 'react-native';
 import api from '../api/api';
 import CustomButton from '../components/CustomButton';
@@ -30,9 +32,20 @@ export default function HomeScreen({navigation}) {
       console.log('error: ', error);
     }
   };
-  const handleNoteCard = ({item}) => {
+  const renderNoteCard = ({item}) => {
     return (
       <TouchableOpacity
+        onLongPress={() =>
+          Alert.alert(`${item.title}`, 'Delete this note ?', [
+            {
+              text: 'okey',
+              onPress: () => {
+                api.delete(`/posts/${item.id}`);
+              },
+            },
+            {text: 'close', onPress: () => null},
+          ])
+        }
         onPress={() => navigation.navigate('DetailScreen', item)}>
         <NoteCard item={item} />
       </TouchableOpacity>
@@ -44,19 +57,19 @@ export default function HomeScreen({navigation}) {
       <View style={style.header}>
         <View style={style.labelArea}>
           <Text style={style.label}>My Notes</Text>
-          <View style={style.photo} />
+          <Image style={style.photo} source={require('../assets/Photo.png')} />
         </View>
         <SearchArea />
       </View>
       <FlatList
         data={posts}
-        renderItem={handleNoteCard}
+        renderItem={renderNoteCard}
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
       />
       <CustomButton
         icon="plus"
-        iconPosition="front"
+        iconPosition="left"
         text="Create"
         onPressButton={() => navigation.navigate('DetailScreen', '')}
       />
@@ -77,7 +90,6 @@ const style = StyleSheet.create({
     fontStyle: 'normal',
   },
   photo: {
-    backgroundColor: '#66DC8A',
     width: 25,
     height: 25,
     borderRadius: 5,

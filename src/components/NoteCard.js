@@ -12,7 +12,7 @@ export default function NoteCard({item}) {
       <View style={style.contentArea}>
         <Text style={style.content} numberOfLines={4} ellipsizeMode={'tail'}>
           {content}
-        </Text>{' '}
+        </Text>
       </View>
     </View>
   );

@@ -100,5 +100,10 @@ const style = StyleSheet.create({
     fontStyle: 'normal',
     paddingStart: 0,
   },
-  content: {},
+  content: {
+    marginTop: 10,
+  },
+  date: {
+    marginTop: 10,
+  },
 });

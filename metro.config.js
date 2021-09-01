@@ -13,7 +13,4 @@ module.exports = {
       },
     }),
   },
-  resolver: {
-    blacklistRE: require('./db.json'),
-  },
 };

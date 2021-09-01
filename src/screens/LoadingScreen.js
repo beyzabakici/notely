@@ -4,8 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoadingScreen({navigation}) {
   useEffect(() => {
-    checkIsUsed;
-  });
+    checkIsUsed();
+  },[]);
 
   const checkIsUsed = async () => {
     try {
@@ -24,7 +24,7 @@ export default function LoadingScreen({navigation}) {
 
   return (
     <SafeAreaView style={style.area}>
-      <ActivityIndicator />
+      <ActivityIndicator size="large" />
     </SafeAreaView>
   );
 }
