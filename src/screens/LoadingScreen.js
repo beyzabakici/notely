@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
-import { ActivityIndicator, SafeAreaView, StyleSheet } from 'react-native';
+import React, {useEffect} from 'react';
+import {ActivityIndicator, SafeAreaView, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function LoadingScreen({ navigation }) {
-
+export default function LoadingScreen({navigation}) {
   useEffect(() => {
-    checkIsUsed();
-  }, [])
+    checkIsUsed;
+  }, []);
 
   const checkIsUsed = async () => {
     try {
@@ -15,13 +14,13 @@ export default function LoadingScreen({ navigation }) {
         navigation.navigate('OnboardingScreen');
       } else {
         navigation.navigate('HomeScreen');
-        const jsonValue = JSON.stringify(true)
+        const jsonValue = JSON.stringify(true);
         AsyncStorage.setItem('@IS_USED', jsonValue);
       }
     } catch (error) {
       console.log('error', error);
     }
-  }
+  };
 
   return (
     <SafeAreaView style={style.area}>
@@ -34,6 +33,6 @@ const style = StyleSheet.create({
   area: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
+    alignItems: 'center',
+  },
+});
