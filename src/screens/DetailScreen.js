@@ -1,6 +1,13 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
-import { SafeAreaView, StyleSheet, TouchableOpacity, View, Text, TextInput } from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Text,
+  TextInput,
+} from 'react-native';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MetarialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import api from '../api/api';
@@ -8,63 +15,61 @@ import ToolsArea from '../components/ToolsArea';
 
 export default function DetailScreen({navigation, route}) {
   const params = route.params;
-    
+
   const currentDate = Date().toString();
-  const [ title, setTitle ] = useState(params ? params.title : 'New Note' );
-  const [ note, setNote ] = useState(params ? params.content : '');
-  const [ date, setDate] = useState(params ? params.change_date : currentDate); //burada
-  const [ id, setId ] = useState(params ? params.id : Date.now())               // ve burada state e gerek var mıydı ?
-
-  useEffect(() => {
-  },[])     //boş bir useEffect ??
-
+  const [title, setTitle] = useState(params ? params.title : 'New Note');
+  const [note, setNote] = useState(params ? params.content : '');
+  const date = params ? params.change_date : currentDate;
+  const id = params ? params.id : Date.now();
 
   const handleBack = () => {
     navigation.goBack();
-  }
+  };
 
-  const submitNote = () =>{  // p geliştirilebilir mi ?
-    if(!params){
-      api.post('posts',{
-        "id": id,
-        "title":title,
-        "content":note,
-        "change_date": date
-      })
+  const submitNote = () => {
+    if (!params) {
+      api.post('posts', {
+        id: id,
+        title: title,
+        content: note,
+        change_date: date,
+      });
     } else {
-      api.put(`/posts/${id}`,{
-        "id": id,
-        "title":title,
-        "content":note,
-        "change_date": date
-      })
+      api.put(`/posts/${id}`, {
+        id: id,
+        title: title,
+        content: note,
+        change_date: date,
+      });
     }
-    navigation.navigate('HomeScreen')
-  }
+    navigation.navigate('HomeScreen');
+  };
 
   return (
-    <SafeAreaView style={style.safeArea} >
+    <SafeAreaView style={style.safeArea}>
       <View style={style.area}>
-      <View style={style.header}>
-        <TouchableOpacity onPress={() => handleBack()}>
-          <MetarialIcon name='keyboard-backspace' size={27} color='#2d2d2d' />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => submitNote()}>
-          <AntIcon name='check' size={27} color='#6273ED' />
-        </TouchableOpacity>
-      </View>
+        <View style={style.header}>
+          <TouchableOpacity onPress={() => handleBack()}>
+            <MetarialIcon name="keyboard-backspace" size={27} color="#2d2d2d" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => submitNote()}>
+            <AntIcon name="check" size={27} color="#6273ED" />
+          </TouchableOpacity>
+        </View>
         <View style={style.noteArea}>
-          <TextInput 
-            style={style.title} 
+          <TextInput
+            style={style.title}
             onChangeText={setTitle}
-            value={title} 
-            multiline={true}/>
+            value={title}
+            multiline={true}
+          />
           <Text style={style.date}> {date} </Text>
-          <TextInput 
-            style={style.content} 
+          <TextInput
+            style={style.content}
             value={note}
-            onChangeText={setNote} 
-            multiline={true}/>
+            onChangeText={setNote}
+            multiline={true}
+          />
         </View>
       </View>
       <ToolsArea />
@@ -73,7 +78,7 @@ export default function DetailScreen({navigation, route}) {
 }
 
 const style = StyleSheet.create({
-  safeArea:{
+  safeArea: {
     flex: 1,
   },
   area: {
@@ -96,6 +101,5 @@ const style = StyleSheet.create({
     fontStyle: 'normal',
     paddingStart: 0,
   },
-  content: {
-  }
+  content: {},
 });

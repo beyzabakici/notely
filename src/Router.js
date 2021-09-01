@@ -1,6 +1,6 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
 
 import OnboardingScreen from './screens/OnboardingScreen';
 import DetailScreen from './screens/DetailScreen';
@@ -13,8 +13,8 @@ export default function Router() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={{ headerShown: false }}
-        initialRouteName='LoadingScreen'>
+        screenOptions={{headerShown: false}}
+        initialRouteName="LoadingScreen">
         <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
         <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
@@ -23,4 +23,3 @@ export default function Router() {
     </NavigationContainer>
   );
 }
-
