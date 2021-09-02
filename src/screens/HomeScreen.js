@@ -16,22 +16,33 @@ import SearchArea from '../components/SearchArea';
 
 export default function HomeScreen({navigation}) {
   const [posts, setPost] = useState([]);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     const unsubscribeFocus = navigation.addListener('focus', () => {
       getPost();
     });
     return unsubscribeFocus;
-  }, [navigation, posts]);
+  }, [posts, searchText]);
 
   const getPost = async () => {
-    try {
-      const res = await api.get('/posts');
-      setPost(res.data);
-    } catch (error) {
-      console.log('error: ', error);
+    if (!searchText) {
+      try {
+        const res = await api.get('/posts');
+        setPost(res.data);
+      } catch (error) {
+        console.log('error: ', error);
+      }
+    } else {
+      try {
+        const res = await api.get(`/posts?q=${searchText}`);
+        console.log(res.data);
+      } catch (error) {
+        console.log('error: ', error);
+      }
     }
   };
+
   const renderNoteCard = ({item}) => {
     return (
       <TouchableOpacity
@@ -59,7 +70,7 @@ export default function HomeScreen({navigation}) {
           <Text style={style.label}>My Notes</Text>
           <Image style={style.photo} source={require('../assets/Photo.png')} />
         </View>
-        <SearchArea />
+        <SearchArea searchText={val => setSearchText(val)} />
       </View>
       <FlatList
         data={posts}

@@ -1,15 +1,27 @@
-import React, {useState} from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
-import  Icon  from 'react-native-vector-icons/MaterialIcons';
+import React, {useState, useEffect} from 'react';
+import {View, TextInput, StyleSheet} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function SearchArea() {
+export default function SearchArea({searchText}) {
+  const [text, setText] = useState('');
 
-  const [text, onChangeText] = useState("");
+  useEffect(() => {}, [text]);
 
-  return(
+  const onChangeText = val => {
+    setText(val);
+    searchText(text);
+  };
+
+  return (
     <View style={style.area}>
-      <Icon name='search' size={23}/>
-      <TextInput placeholder='Search anything' size={16} onChangeText={onChangeText}/>
+      <Icon name="search" size={23} />
+      <TextInput
+        placeholder="Search anything"
+        size={16}
+        onChangeText={onChangeText}
+        value={text}
+        clearButtonMode="always"
+      />
     </View>
   );
 }
@@ -23,7 +35,6 @@ const style = StyleSheet.create({
     borderColor: 'transparent',
     backgroundColor: '#e9e9e9',
     paddingHorizontal: 10,
-    marginVertical: 10
-
-  }
+    marginVertical: 10,
+  },
 });
