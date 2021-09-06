@@ -9,39 +9,24 @@ import {
   Image,
   Alert,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import api from '../api/api';
 import CustomButton from '../components/CustomButton';
 import NoteCard from '../components/NoteCard';
 import SearchArea from '../components/SearchArea';
+import {getPostsAsync, selectPosts} from '../redux/posts/postsSlice';
+import Loading from '../components/Loading';
 
 export default function HomeScreen({navigation}) {
-  const [posts, setPost] = useState([]);
-  const [searchText, setSearchText] = useState('');
+  const dispatch = useDispatch();
+
+  const posts = useSelector(selectPosts);
+  const isLoading = useSelector(state => state.posts.isLoading);
+  const error = useSelector(state => state.posts.error);
 
   useEffect(() => {
-    const unsubscribeFocus = navigation.addListener('focus', () => {
-      getPost();
-    });
-    return unsubscribeFocus;
-  }, [posts, searchText]);
-
-  const getPost = async () => {
-    if (!searchText) {
-      try {
-        const res = await api.get('/posts');
-        setPost(res.data);
-      } catch (error) {
-        console.log('error: ', error);
-      }
-    } else {
-      try {
-        const res = await api.get(`/posts?title_like=${searchText}`);
-        console.log('res.data>>>', res.data);
-      } catch (error) {
-        console.log('error: ', error);
-      }
-    }
-  };
+    dispatch(getPostsAsync());
+  }, [dispatch]);
 
   const renderNoteCard = ({item}) => {
     return (
@@ -62,6 +47,14 @@ export default function HomeScreen({navigation}) {
       </TouchableOpacity>
     );
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    console.log('Get Posts Error >>', error);
+  }
 
   return (
     <SafeAreaView style={style.area}>

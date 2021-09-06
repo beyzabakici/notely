@@ -9,11 +9,16 @@ import {
 } from 'react-native';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MetarialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import api from '../api/api';
+import {useDispatch, useSelector} from 'react-redux';
+import Loading from '../components/Loading';
 import ToolsArea from '../components/ToolsArea';
+import {addPostAsync, updatePostAsync} from '../redux/posts/postsSlice';
 
 export default function DetailScreen({navigation, route}) {
   const params = route.params;
+  const dispatch = useDispatch();
+  const isAddLoading = useSelector(state => state.posts.addNewPostLoading);
+  const addError = useSelector(state => state.posts.addNewPostError);
 
   const currentDate = Date().toString();
   const [title, setTitle] = useState(params ? params.title : 'New Note');
@@ -25,21 +30,33 @@ export default function DetailScreen({navigation, route}) {
     navigation.goBack();
   };
 
-  const submitNote = () => {
+  const submitNote = async e => {
     if (!params) {
-      api.post('posts', {
-        id: id,
-        title: title,
-        content: note,
-        change_date: date,
-      });
+      await dispatch(
+        addPostAsync({
+          id: id,
+          title: title,
+          content: note,
+          change_date: date,
+        }),
+      );
+
+      if (isAddLoading) {
+        return <Loading />;
+      }
+
+      if (addError) {
+        console.log('Add Post Error >>', addError);
+      }
     } else {
-      api.put(`/posts/${id}`, {
-        id: id,
-        title: title,
-        content: note,
-        change_date: date,
-      });
+      await dispatch(
+        updatePostAsync({
+          id: id,
+          title: title,
+          content: note,
+          change_date: Date.now(),
+        }),
+      );
     }
     navigation.navigate('HomeScreen');
   };
@@ -51,7 +68,7 @@ export default function DetailScreen({navigation, route}) {
           <TouchableOpacity onPress={() => handleBack()}>
             <MetarialIcon name="keyboard-backspace" size={27} color="#2d2d2d" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => submitNote()}>
+          <TouchableOpacity onPress={submitNote}>
             <AntIcon name="check" size={27} color="#6273ED" />
           </TouchableOpacity>
         </View>

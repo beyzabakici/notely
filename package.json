@@ -17,6 +17,7 @@
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/stack": "^6.0.7",
+    "@reduxjs/toolkit": "^1.6.1",
     "axios": "^0.21.1",
     "babel-loader": "^8.2.2",
     "jetifier": "^2.0.0",
@@ -28,6 +29,7 @@
     "react-native-safe-area-context": "^3.3.0",
     "react-native-screens": "^3.6.0",
     "react-native-vector-icons": "^8.1.0",
+    "react-redux": "^7.2.5",
     "simple-swizzle": "^0.2.2",
     "waait": "^1.0.5",
     "webpack": "^5.51.1"

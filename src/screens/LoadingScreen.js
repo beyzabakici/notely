@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
-import {ActivityIndicator, SafeAreaView, StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Loading from '../components/Loading';
 
 export default function LoadingScreen({navigation}) {
   useEffect(() => {
     checkIsUsed();
-  },[]);
+  }, []);
 
   const checkIsUsed = async () => {
     try {
@@ -18,13 +19,13 @@ export default function LoadingScreen({navigation}) {
         AsyncStorage.setItem('@IS_USED', jsonValue);
       }
     } catch (error) {
-      console.log('error', error);
+      console.log('Loading error >>', error);
     }
   };
 
   return (
     <SafeAreaView style={style.area}>
-      <ActivityIndicator size="large" />
+      <Loading />
     </SafeAreaView>
   );
 }
@@ -32,7 +33,5 @@ export default function LoadingScreen({navigation}) {
 const style = StyleSheet.create({
   area: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
