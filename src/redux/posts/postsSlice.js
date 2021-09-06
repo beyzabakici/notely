@@ -1,5 +1,4 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import axios from 'axios';
 import api from '../../api/api';
 
 export const getPostsAsync = createAsyncThunk(
@@ -21,7 +20,6 @@ export const addPostAsync = createAsyncThunk(
 export const updatePostAsync = createAsyncThunk(
   'posts/updatePostAsync',
   async data => {
-    console.log(data);
     const res = await api.put(`/posts/${data.id}`, data);
     return res.data;
   },
@@ -61,11 +59,14 @@ export const postsSlice = createSlice({
     },
     // update post
     [updatePostAsync.fulfilled]: (state, action) => {
-      console.log(action.payload);
-      // state.updatePostLoading = false;
-      // const {id, completed} = action.payload;
-      // const index = state.items.findIndex(item => item.id == id);
-      // state.items[index].completed = completed;
+      const {id, title, change_date, content} = action.payload;
+      const index = state.items.findIndex(item => item.id == id);
+      state.items[index] = {
+        change_date: change_date,
+        content: content,
+        id: id,
+        title: title,
+      };
     },
   },
 });

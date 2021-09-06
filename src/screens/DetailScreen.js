@@ -42,6 +42,7 @@ export default function DetailScreen({navigation, route}) {
       );
 
       if (isAddLoading) {
+        console.log('add loading');
         return <Loading />;
       }
 
@@ -54,7 +55,7 @@ export default function DetailScreen({navigation, route}) {
           id: id,
           title: title,
           content: note,
-          change_date: Date.now(),
+          change_date: date,
         }),
       );
     }

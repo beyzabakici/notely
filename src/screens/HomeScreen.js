@@ -49,6 +49,7 @@ export default function HomeScreen({navigation}) {
   };
 
   if (isLoading) {
+    console.log('get loading');
     return <Loading />;
   }
 
