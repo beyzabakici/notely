@@ -35,8 +35,8 @@ export default function HomeScreen({navigation}) {
       }
     } else {
       try {
-        const res = await api.get(`/posts?q=${searchText}`);
-        console.log(res.data);
+        const res = await api.get(`/posts?title_like=${searchText}`);
+        console.log('res.data>>>', res.data);
       } catch (error) {
         console.log('error: ', error);
       }
