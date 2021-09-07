@@ -13,20 +13,21 @@ import {useDispatch, useSelector} from 'react-redux';
 import CustomButton from '../components/CustomButton';
 import NoteCard from '../components/NoteCard';
 import SearchArea from '../components/SearchArea';
+import Loading from '../components/Loading';
 import {
   getPostsAsync,
   selectPosts,
   detelePostAsync,
   getQueryPostAsync,
 } from '../redux/posts/postsSlice';
-import Loading from '../components/Loading';
 
 export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
 
   const posts = useSelector(selectPosts);
-  const isLoading = useSelector(state => state.posts.isLoading);
-  const error = useSelector(state => state.posts.error);
+  const {queryPost, deletePost, isLoading, error} = useSelector(
+    state => state.posts,
+  );
 
   useEffect(() => {
     dispatch(getPostsAsync());
@@ -39,7 +40,16 @@ export default function HomeScreen({navigation}) {
           Alert.alert(`${item.title}`, 'Delete this note ?', [
             {
               text: 'okey',
-              onPress: () => dispatch(detelePostAsync(item)),
+              onPress: () => {
+                dispatch(detelePostAsync(item));
+                if (deletePost.isLoading) {
+                  return <Loading />;
+                }
+
+                if (deletePost.error) {
+                  console.log('Delete Post Error >>', deletePost.error);
+                }
+              },
             },
             {text: 'close', onPress: () => null},
           ])
@@ -58,6 +68,17 @@ export default function HomeScreen({navigation}) {
     console.log('Get Posts Error >>', error);
   }
 
+  const renderQueryPost = val => {
+    dispatch(getQueryPostAsync(val));
+    if (queryPost.isLoading) {
+      return <Loading />;
+    }
+
+    if (queryPost.error) {
+      console.log('Query Post Error >>', queryPost.error);
+    }
+  };
+
   return (
     <SafeAreaView style={style.area}>
       <View style={style.header}>
@@ -65,7 +86,7 @@ export default function HomeScreen({navigation}) {
           <Text style={style.label}>My Notes</Text>
           <Image style={style.photo} source={require('../assets/Photo.png')} />
         </View>
-        <SearchArea searchText={val => dispatch(getQueryPostAsync(val))} />
+        <SearchArea searchText={renderQueryPost} />
       </View>
       <FlatList
         data={posts}

@@ -90,7 +90,6 @@ export const postsSlice = createSlice({
       state.addPost.error = action.error.message;
     },
     // update post
-    // TODO:pending ve rejected kullan
     [updatePostAsync.pending]: (state, action) => {
       state.updatePost.isLoading = true;
     },
@@ -111,7 +110,6 @@ export const postsSlice = createSlice({
       state.deletePost.error = action.error.message;
     },
     // delete post
-    //TODO:pending ve rejected kullan
     [detelePostAsync.pending]: (state, action) => {
       state.deletePost.isLoading = true;
     },
