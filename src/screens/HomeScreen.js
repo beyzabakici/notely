@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -10,11 +10,15 @@ import {
   Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import api from '../api/api';
 import CustomButton from '../components/CustomButton';
 import NoteCard from '../components/NoteCard';
 import SearchArea from '../components/SearchArea';
-import {getPostsAsync, selectPosts} from '../redux/posts/postsSlice';
+import {
+  getPostsAsync,
+  selectPosts,
+  detelePostAsync,
+  getQueryPostAsync,
+} from '../redux/posts/postsSlice';
 import Loading from '../components/Loading';
 
 export default function HomeScreen({navigation}) {
@@ -35,9 +39,7 @@ export default function HomeScreen({navigation}) {
           Alert.alert(`${item.title}`, 'Delete this note ?', [
             {
               text: 'okey',
-              onPress: () => {
-                api.delete(`/posts/${item.id}`);
-              },
+              onPress: () => dispatch(detelePostAsync(item)),
             },
             {text: 'close', onPress: () => null},
           ])
@@ -49,7 +51,6 @@ export default function HomeScreen({navigation}) {
   };
 
   if (isLoading) {
-    console.log('get loading');
     return <Loading />;
   }
 
@@ -64,7 +65,7 @@ export default function HomeScreen({navigation}) {
           <Text style={style.label}>My Notes</Text>
           <Image style={style.photo} source={require('../assets/Photo.png')} />
         </View>
-        <SearchArea searchText={val => setSearchText(val)} />
+        <SearchArea searchText={val => dispatch(getQueryPostAsync(val))} />
       </View>
       <FlatList
         data={posts}

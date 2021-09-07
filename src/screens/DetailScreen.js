@@ -17,8 +17,7 @@ import {addPostAsync, updatePostAsync} from '../redux/posts/postsSlice';
 export default function DetailScreen({navigation, route}) {
   const params = route.params;
   const dispatch = useDispatch();
-  const isAddLoading = useSelector(state => state.posts.addNewPostLoading);
-  const addError = useSelector(state => state.posts.addNewPostError);
+  const {error, isLoading} = useSelector(state => state.posts.addPost);
 
   const currentDate = Date().toString();
   const [title, setTitle] = useState(params ? params.title : 'New Note');
@@ -41,13 +40,12 @@ export default function DetailScreen({navigation, route}) {
         }),
       );
 
-      if (isAddLoading) {
-        console.log('add loading');
+      if (isLoading) {
         return <Loading />;
       }
 
-      if (addError) {
-        console.log('Add Post Error >>', addError);
+      if (error) {
+        console.log('Add Post Error >>', error);
       }
     } else {
       await dispatch(
