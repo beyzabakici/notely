@@ -20,6 +20,7 @@ import {
   detelePostAsync,
   getQueryPostAsync,
 } from '../redux/posts/postsSlice';
+import {debounce} from 'lodash';
 
 export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
@@ -86,7 +87,7 @@ export default function HomeScreen({navigation}) {
           <Text style={style.label}>My Notes</Text>
           <Image style={style.photo} source={require('../assets/Photo.png')} />
         </View>
-        <SearchArea searchText={renderQueryPost} />
+        <SearchArea searchText={debounce(renderQueryPost, 500)} />
       </View>
       <FlatList
         data={posts}
