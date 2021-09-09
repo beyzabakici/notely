@@ -95,15 +95,11 @@ export const postsSlice = createSlice({
     },
     [updatePostAsync.fulfilled]: (state, action) => {
       state.updatePost.isLoading = false;
-      const {id, title, change_date, content} = action.payload;
-      const index = state.items.findIndex(item => item.id === id);
-      // TODO:spread ile yapılır mıydı?
-      state.items[index] = {
-        change_date: change_date,
-        content: content,
-        id: id,
-        title: title,
-      };
+      state.items.map(
+        item => item.id === action.payload.id,
+        ...state.items,
+        action.payload,
+      );
     },
     [updatePostAsync.rejected]: (state, action) => {
       state.updatePost.isLoading = true;
