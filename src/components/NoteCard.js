@@ -1,10 +1,28 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native';
+import {mutate} from 'swr';
+import {deletePost} from '../Context/Mutation';
 
-export default function NoteCard({item}) {
+export default function NoteCard({item, posts, navigation}) {
   const {change_date, content, title} = item;
+
+  const handleOnLongPress = () => {
+    Alert.alert(`${item.title}`, 'Delete this note ?', [
+      {
+        text: 'okey',
+        onPress: () => {
+          mutate('/posts', deletePost(item, posts), false);
+        },
+      },
+      {text: 'close', onPress: () => null},
+    ]);
+  };
+
   return (
-    <View style={style.postArea}>
+    <TouchableOpacity
+      style={style.postArea}
+      onLongPress={handleOnLongPress}
+      onPress={() => navigation.navigate('DetailScreen', item)}>
       <View style={style.labelArea}>
         <Text style={style.title}>{title}</Text>
         <Text style={style.date}>{change_date}</Text>
@@ -14,7 +32,7 @@ export default function NoteCard({item}) {
           {content}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

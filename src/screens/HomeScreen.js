@@ -1,83 +1,48 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import {
   SafeAreaView,
   Text,
   View,
   StyleSheet,
   FlatList,
-  TouchableOpacity,
   Image,
-  Alert,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
 import CustomButton from '../components/CustomButton';
 import NoteCard from '../components/NoteCard';
 import SearchArea from '../components/SearchArea';
-import Loading from '../components/Loading';
-import {
-  getPostsAsync,
-  selectPosts,
-  detelePostAsync,
-  getQueryPostAsync,
-} from '../redux/posts/postsSlice';
-import {debounce} from 'lodash';
+import useSWR, {useSWRConfig} from 'swr';
+import api from '../api/api';
+import {queryPost} from '../Context/Mutation';
 
 export default function HomeScreen({navigation}) {
-  const dispatch = useDispatch();
-
-  const posts = useSelector(selectPosts);
-  const {queryPost, deletePost, isLoading, error} = useSelector(
-    state => state.posts,
-  );
+  const fetcher = url => api.get(url).then(res => res.data);
+  const {mutate} = useSWRConfig();
+  const {data: posts, error: swrError} = useSWR('/posts', fetcher, {
+    refreshInterval: 5000,
+  });
 
   useEffect(() => {
-    dispatch(getPostsAsync());
-  }, [dispatch]);
+    const unsubscribeFocus = navigation.addListener('focus', () => {
+      mutate('/posts');
+    });
+    return unsubscribeFocus;
+  }, []);
 
-  const renderNoteCard = ({item}) => {
+  if (swrError) {
     return (
-      <TouchableOpacity
-        onLongPress={() =>
-          Alert.alert(`${item.title}`, 'Delete this note ?', [
-            {
-              text: 'okey',
-              onPress: () => {
-                dispatch(detelePostAsync(item));
-                if (deletePost.isLoading) {
-                  return <Loading />;
-                }
-
-                if (deletePost.error) {
-                  console.log('Delete Post Error >>', deletePost.error);
-                }
-              },
-            },
-            {text: 'close', onPress: () => null},
-          ])
-        }
-        onPress={() => navigation.navigate('DetailScreen', item)}>
-        <NoteCard item={item} />
-      </TouchableOpacity>
+      <View>
+        <Text>hata</Text>
+      </View>
     );
+  }
+
+  //TODO:navigation u default oalrak geçirmedi ??
+  const renderNoteCard = ({item}) => {
+    return <NoteCard item={item} posts={posts} navigation={navigation} />;
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (error) {
-    console.log('Get Posts Error >>', error);
-  }
-
-  const renderQueryPost = val => {
-    dispatch(getQueryPostAsync(val));
-    if (queryPost.isLoading) {
-      return <Loading />;
-    }
-
-    if (queryPost.error) {
-      console.log('Query Post Error >>', queryPost.error);
-    }
+  const handleQueryPost = val => {
+    queryPost(val, posts);
   };
 
   return (
@@ -87,7 +52,7 @@ export default function HomeScreen({navigation}) {
           <Text style={style.label}>My Notes</Text>
           <Image style={style.photo} source={require('../assets/Photo.png')} />
         </View>
-        <SearchArea searchText={debounce(renderQueryPost, 500)} />
+        <SearchArea searchText={handleQueryPost} />
       </View>
       <FlatList
         data={posts}

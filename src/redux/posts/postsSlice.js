@@ -9,15 +9,6 @@ export const getPostsAsync = createAsyncThunk(
   },
 );
 
-//TODO:id de donduruyo :d
-export const getQueryPostAsync = createAsyncThunk(
-  'posts/getQueryPostAsync/',
-  async val => {
-    const res = await api.get(`/posts?q=${val}`);
-    return res.data;
-  },
-);
-
 export const addPostAsync = createAsyncThunk(
   'posts/addPostAsync',
   async data => {
@@ -34,14 +25,6 @@ export const updatePostAsync = createAsyncThunk(
   },
 );
 
-export const detelePostAsync = createAsyncThunk(
-  'posts/deletePostAsync',
-  async data => {
-    const res = await api.delete(`/posts/${data.id}`);
-    return res.data;
-  },
-);
-
 export const postsSlice = createSlice({
   name: 'posts',
   initialState: {
@@ -53,14 +36,6 @@ export const postsSlice = createSlice({
       error: null,
     },
     updatePost: {
-      isLoading: false,
-      error: null,
-    },
-    deletePost: {
-      isLoading: false,
-      error: null,
-    },
-    queryPost: {
       isLoading: false,
       error: null,
     },
@@ -103,32 +78,6 @@ export const postsSlice = createSlice({
     },
     [updatePostAsync.rejected]: (state, action) => {
       state.updatePost.isLoading = true;
-      state.deletePost.error = action.error.message;
-    },
-    // delete post
-    [detelePostAsync.pending]: (state, action) => {
-      state.deletePost.isLoading = true;
-    },
-    [detelePostAsync.fulfilled]: (state, action) => {
-      state.deletePost.isLoading = false;
-      const {id} = action.payload;
-      const index = state.items.findIndex(item => item.id === id);
-      state.items.splice(index, 1);
-    },
-    [detelePostAsync.rejected]: (state, action) => {
-      state.deletePost.isLoading = false;
-      state.deletePost.error = action.error.message;
-    },
-    //query post
-    [getQueryPostAsync.pending]: (state, action) => {
-      state.queryPost.isLoading = true;
-    },
-    [getQueryPostAsync.fulfilled]: (state, action) => {
-      state.queryPost.isLoading = false;
-      state.items = action.payload;
-    },
-    [getQueryPostAsync.rejected]: (state, action) => {
-      state.queryPost.isLoading = false;
       state.deletePost.error = action.error.message;
     },
   },
