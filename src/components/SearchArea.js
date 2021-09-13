@@ -2,9 +2,8 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {debounce} from 'lodash';
-import {queryPost} from '../Context/Mutation';
 
-export default function SearchArea() {
+export default function SearchArea({searchText}) {
   const [text, setText] = useState('');
 
   const onChangeText = val => {
@@ -13,7 +12,7 @@ export default function SearchArea() {
   };
 
   const handleQueryPost = e => {
-    queryPost(e);
+    searchText(e);
   };
 
   const debouncedQueryPost = useCallback(debounce(handleQueryPost, 500), []);
