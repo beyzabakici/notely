@@ -1,4 +1,3 @@
-import {mutate} from 'swr';
 import api from '../api/api';
 
 export const deletePost = async (item, posts) => {

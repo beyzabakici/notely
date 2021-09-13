@@ -17,9 +17,7 @@ export default function HomeScreen({navigation}) {
   const [queryParams, setQueryParams] = useState('');
   const fetcher = url => api.get(url).then(res => res.data);
   const {mutate} = useSWRConfig();
-  const {error: swrError} = useSWR('/posts', fetcher, {
-    refreshInterval: 5000,
-  });
+  const {error: swrError} = useSWR('/posts', fetcher);
 
   const {data: posts} = useSWR(
     !queryParams ? '/posts' : `/posts?q=${queryParams}`,
@@ -42,7 +40,6 @@ export default function HomeScreen({navigation}) {
     );
   }
 
-  //TODO:navigation u default oalrak geçirmedi ??
   const renderNoteCard = ({item}) => {
     return <NoteCard item={item} posts={posts} navigation={navigation} />;
   };

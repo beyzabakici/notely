@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native';
 import {mutate} from 'swr';
-import {deletePost} from '../Context/Mutation';
+import {deletePost} from '../context/Mutation';
 
 export default function NoteCard({item, posts, navigation}) {
   const {change_date, content, title} = item;
