@@ -6,7 +6,8 @@ export const deletePost = async (item, posts) => {
   return posts.filter(post => post.id !== item.id);
 };
 
-export const queryPost = async (val, posts) => {
+export const queryPost = async val => {
   const res = await api.get(`/posts?q=${val}`);
+  console.log(res.data);
   mutate({data: res.data});
 };

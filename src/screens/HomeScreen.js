@@ -12,13 +12,12 @@ import NoteCard from '../components/NoteCard';
 import SearchArea from '../components/SearchArea';
 import useSWR, {useSWRConfig} from 'swr';
 import api from '../api/api';
-import {queryPost} from '../Context/Mutation';
 
 export default function HomeScreen({navigation}) {
   const fetcher = url => api.get(url).then(res => res.data);
   const {mutate} = useSWRConfig();
   const {data: posts, error: swrError} = useSWR('/posts', fetcher, {
-    refreshInterval: 5000,
+    //refreshInterval: 5000,
   });
 
   useEffect(() => {
@@ -41,10 +40,6 @@ export default function HomeScreen({navigation}) {
     return <NoteCard item={item} posts={posts} navigation={navigation} />;
   };
 
-  const handleQueryPost = val => {
-    queryPost(val, posts);
-  };
-
   return (
     <SafeAreaView style={style.area}>
       <View style={style.header}>
@@ -52,7 +47,7 @@ export default function HomeScreen({navigation}) {
           <Text style={style.label}>My Notes</Text>
           <Image style={style.photo} source={require('../assets/Photo.png')} />
         </View>
-        <SearchArea searchText={handleQueryPost} />
+        <SearchArea />
       </View>
       <FlatList
         data={posts}

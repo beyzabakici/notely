@@ -1,16 +1,22 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {debounce} from 'lodash';
+import {queryPost} from '../Context/Mutation';
 
-export default function SearchArea({searchText}) {
+export default function SearchArea() {
   const [text, setText] = useState('');
-
-  useEffect(() => {}, [text]);
 
   const onChangeText = val => {
     setText(val);
-    searchText(text);
+    debouncedQueryPost(val);
   };
+
+  const handleQueryPost = e => {
+    queryPost(e);
+  };
+
+  const debouncedQueryPost = useCallback(debounce(handleQueryPost, 500), []);
 
   return (
     <View style={style.area}>
