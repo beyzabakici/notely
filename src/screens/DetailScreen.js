@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -6,6 +6,7 @@ import {
   View,
   Text,
   TextInput,
+  BackHandler,
 } from 'react-native';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MetarialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -25,9 +26,14 @@ export default function DetailScreen({navigation, route}) {
   const date = params ? params.change_date : currentDate;
   const id = params ? params.id : Date.now();
 
-  const handleBack = () => {
+  const handleBackButton = () => {
     navigation.goBack();
+    return true;
   };
+  useEffect(
+    () => BackHandler.addEventListener('hardwareBackPress', handleBackButton),
+    [],
+  );
 
   const submitNote = async e => {
     if (!params) {
@@ -71,7 +77,7 @@ export default function DetailScreen({navigation, route}) {
     <SafeAreaView style={style.safeArea}>
       <View style={style.area}>
         <View style={style.header}>
-          <TouchableOpacity onPress={() => handleBack()}>
+          <TouchableOpacity onPress={() => handleBackButton()}>
             <MetarialIcon name="keyboard-backspace" size={27} color="#2d2d2d" />
           </TouchableOpacity>
           <TouchableOpacity onPress={submitNote}>

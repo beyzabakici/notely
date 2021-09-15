@@ -6,6 +6,7 @@ import {
   StyleSheet,
   FlatList,
   Image,
+  BackHandler,
 } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import NoteCard from '../components/NoteCard';
@@ -25,7 +26,7 @@ export default function HomeScreen({navigation}) {
   );
 
   useEffect(() => {
-    console.log(posts);
+    BackHandler.addEventListener('hardwareBackPress', handleBackButton);
     const unsubscribeFocus = navigation.addListener('focus', () => {
       mutate('/posts');
     });
@@ -39,6 +40,11 @@ export default function HomeScreen({navigation}) {
       </View>
     );
   }
+
+  const handleBackButton = () => {
+    navigation.goBack();
+    return false;
+  };
 
   const renderNoteCard = ({item}) => {
     return <NoteCard item={item} posts={posts} navigation={navigation} />;
