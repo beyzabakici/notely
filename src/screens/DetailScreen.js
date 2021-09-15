@@ -19,7 +19,7 @@ export default function DetailScreen({navigation, route}) {
   const params = route.params;
   const dispatch = useDispatch();
   const {addPost, updatePost} = useSelector(state => state.posts);
-
+  const [duplicateBack, setDuplicateBack] = useState();
   const currentDate = Date().toString();
   const [title, setTitle] = useState(params ? params.title : 'New Note');
   const [note, setNote] = useState(params ? params.content : '');
@@ -27,13 +27,12 @@ export default function DetailScreen({navigation, route}) {
   const id = params ? params.id : Date.now();
 
   const handleBackButton = () => {
-    navigation.goBack();
-    return true;
+    if (!duplicateBack) {
+      setDuplicateBack(true);
+      navigation.goBack();
+    }
+    return;
   };
-  useEffect(
-    () => BackHandler.addEventListener('hardwareBackPress', handleBackButton),
-    [],
-  );
 
   const submitNote = async e => {
     if (!params) {
@@ -77,7 +76,7 @@ export default function DetailScreen({navigation, route}) {
     <SafeAreaView style={style.safeArea}>
       <View style={style.area}>
         <View style={style.header}>
-          <TouchableOpacity onPress={() => handleBackButton()}>
+          <TouchableOpacity onPress={handleBackButton}>
             <MetarialIcon name="keyboard-backspace" size={27} color="#2d2d2d" />
           </TouchableOpacity>
           <TouchableOpacity onPress={submitNote}>

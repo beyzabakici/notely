@@ -15,6 +15,7 @@ import useSWR, {useSWRConfig} from 'swr';
 import api from '../api/api';
 
 export default function HomeScreen({navigation}) {
+  const [duplicateBack, setDuplicateBack] = useState();
   const [queryParams, setQueryParams] = useState('');
   const fetcher = url => api.get(url).then(res => res.data);
   const {mutate} = useSWRConfig();
@@ -26,7 +27,6 @@ export default function HomeScreen({navigation}) {
   );
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', handleBackButton);
     const unsubscribeFocus = navigation.addListener('focus', () => {
       mutate('/posts');
     });
@@ -40,11 +40,6 @@ export default function HomeScreen({navigation}) {
       </View>
     );
   }
-
-  const handleBackButton = () => {
-    navigation.goBack();
-    return false;
-  };
 
   const renderNoteCard = ({item}) => {
     return <NoteCard item={item} posts={posts} navigation={navigation} />;
