@@ -6,7 +6,7 @@ import {
   StyleSheet,
   FlatList,
   Image,
-  BackHandler,
+  StatusBar,
 } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import NoteCard from '../components/NoteCard';
@@ -15,7 +15,6 @@ import useSWR, {useSWRConfig} from 'swr';
 import api from '../api/api';
 
 export default function HomeScreen({navigation}) {
-  const [duplicateBack, setDuplicateBack] = useState();
   const [queryParams, setQueryParams] = useState('');
   const fetcher = url => api.get(url).then(res => res.data);
   const {mutate} = useSWRConfig();
@@ -51,6 +50,7 @@ export default function HomeScreen({navigation}) {
 
   return (
     <SafeAreaView style={style.area}>
+      <StatusBar barStyle="light-content" backgroundColor="#f1f1f1" />
       <View style={style.header}>
         <View style={style.labelArea}>
           <Text style={style.label}>My Notes</Text>
@@ -77,7 +77,8 @@ export default function HomeScreen({navigation}) {
 const style = StyleSheet.create({
   area: {
     flex: 1,
-    padding: 10,
+    paddingVertical: 0,
+    paddingHorizontal: 10,
     backgroundColor: '#f1f1f1',
   },
   label: {

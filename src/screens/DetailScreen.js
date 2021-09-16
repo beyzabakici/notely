@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -6,7 +6,6 @@ import {
   View,
   Text,
   TextInput,
-  BackHandler,
 } from 'react-native';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MetarialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
